@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        'use strict';
+
+        // Írj egy olyan függvényt, mely paraméterként kap egy tömböt. A függvény visszatérési érték egy Promise.
+        // A Promise resolved lesz, amennyiben a tömb minden eleme string, és sikeresen nagybetűssé alakíthatók. 
+        // Ebben az esetben a Promise resolved lesz és visszaad egy új tömböt, 
+        // ami az eredeti tömb összes elemét nagybetűssé alakítva tartalmazza. 
+        // Ellenkező esetben a Promise rejected lesz, a visszatérési érték: Error: Not all items in the array are strings!
+
+        const array = ['d', 'dfkjg', 'aj', 'b', 'aj'];
+        const array1 = ['d', 'dfkjg', 'aj', 'b', 1];
+
+        function toUpperCase(arr) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const item = arr.every((item) => typeof item === 'string');
+                    if (item) {
+                        resolve(arr.map(item => item.toLocaleUpperCase()));
+                    } else {
+                        reject(Error('Not all items in the array are strings!'))
+                    }
+                }, 0)
+            });
+        }
+
+        toUpperCase(array)
+            // .then((array) => {
+            //     console.log(array)
+            // })
+            .then(console.log)
+            // .catch((error) => {
+            //     console.error(error)
+            // });
+            .catch(console.error);
+
+
+
+        // Írj egy másik függvényt, mely paraméterként szintén egy tömböt kap. A függvény visszatérési érték egy Promise.
+        // A Promise resolved lesz, amennyiben a tömb minden eleme string, és visszatér az ABC szerinti rendezett tömbbel.
+        // Ha nem minden elem string, akkor a Promise rejected lesz, 
+        // és kiírja a konzolra: Error: Not all items in the array are strings!
+        // Ha a sorba rendezés során hiba történik akkor is rejected lesz a Promise, a visszatérési érték:
+        // Error: Something went wrong with sorting words.
+
+        function sortTheStrings(arr) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const item = arr.every((item) => typeof item === 'string');
+                    if (item) {
+                        if (arr.sort()) {
+                            resolve(arr.sort());
+                        } else {
+                            reject(Error('Something went wrong with sorting words.'))
+                        }
+                    } else {
+                        reject(Error('Not all items in the array are strings!'))
+                    }
+                }, 0)
+            });
+        }
+
+        sortTheStrings(array)
+            .then(console.log)
+            .catch(console.error);
+
+    </script>
+</body>
+
+</html>
